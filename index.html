@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<html>
+    <head>
+        <meta charset="UTF-8">
+        <title>Gerador de Senhas</title>
+        <link rel="stylesheet" type="text/css" href="./css/style.css">
+    </head>
+    <body>
+        <div class="inputBox">
+            <h2>GERADOR DE SENHAS</h2>
+            <input type="text" name="" placeholder="" id="senha" readonly="">
+            <img src="./img/copiar.png" class="copiar" alt="button copiar" onclick="copiarSenha();">
+            <div id="btn" onclick="getPassword();">GERAR</div>
+        </div>
+        <div class="alertBox"></div>
+        <script type="text/javascript">
+          alertBox = document.querySelector('.alertBox');
+            function getPassword(){
+                caract = "0123456789abcçdefghijklmnopqrstuvwxyzABCÇDEFGHIJKLMNOPQRSTUVWXYZ!@#$%^&*_+?:";
+                tamanhSenha = 16;
+                senha = "";
+
+                for (i=0; i<tamanhSenha; i++){
+                    randomNumber = Math.floor(Math.random() * caract.length);
+                    senha += caract.substring(randomNumber, randomNumber+1);
+                }
+                document.getElementById("senha").value = senha;
+                alertBox.innerHTML = "SENHA COPIADA: <br/> " + senha;
+            }
+
+            function copiarSenha(){
+                copiartexto = document.getElementById("senha");
+                copiartexto.select();
+                copiartexto.setSelectionRange(0,9999);
+                document.execCommand("copiar");
+                alertBox.classList.toggle('active');
+                setTimeout(function(){
+                    alertBox.classList.toggle('active')
+                }, 2000)
+            }
+        </script>
+    </body>
+</html>
