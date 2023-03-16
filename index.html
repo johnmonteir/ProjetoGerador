@@ -1,44 +1,56 @@
 <!DOCTYPE html>
 <html lang="pt-br">
-<html>
-    <head>
-        <meta charset="UTF-8">
-        <title>Gerador de Senhas</title>
-        <link rel="stylesheet" type="text/css" href="./css/style.css">
-    </head>
-    <body>
+
+<head>
+    <meta charset="UTF-8">
+    <title>Gerador de Senhas</title>
+    <link rel="stylesheet" href="./css/style.css">
+</head>
+
+<body>
+    <div class="container">
         <div class="inputBox">
             <h2>GERADOR DE SENHAS</h2>
-            <input type="text" name="" placeholder="" id="senha" readonly="">
-            <img src="./img/copiar.png" class="copiar" alt="button copiar" onclick="copiarSenha();">
-            <div id="btn" onclick="getPassword();">GERAR</div>
+            <input type="text" id="senha" readonly>
+            <button id="btn-gerar" onclick="getPassword()">GERAR</button>
+            <button id="btn-copiar" onclick="copiarSenha()">COPIAR</button>
         </div>
-        <div class="alertBox"></div>
-        <script type="text/javascript">
-          alertBox = document.querySelector('.alertBox');
-            function getPassword(){
-                caract = "0123456789abcçdefghijklmnopqrstuvwxyzABCÇDEFGHIJKLMNOPQRSTUVWXYZ!@#$%^&*_+?:";
-                tamanhSenha = 16;
-                senha = "";
+        <div class="alertBox">
+            <span class="alertMessage"></span>
+        </div>
+    </div>
+    <script>
+        const alertBox = document.querySelector('.alertBox');
+        const alertMessage = document.querySelector('.alertMessage');
+        const senhaInput = document.getElementById('senha');
+        const gerarBtn = document.getElementById('btn-gerar');
+        const copiarBtn = document.getElementById('btn-copiar');
 
-                for (i=0; i<tamanhSenha; i++){
-                    randomNumber = Math.floor(Math.random() * caract.length);
-                    senha += caract.substring(randomNumber, randomNumber+1);
-                }
-                document.getElementById("senha").value = senha;
-                alertBox.innerHTML = "SENHA COPIADA: <br/> " + senha;
+        function getPassword() {
+            const caracteres = "0123456789abcçdefghijklmnopqrstuvwxyzABCÇDEFGHIJKLMNOPQRSTUVWXYZ!@#*";
+            const tamanhoSenha = 16;
+            let senha = "";
+
+            for (let i = 0; i < tamanhoSenha; i++) {
+                const randomNumber = Math.floor(Math.random() * caracteres.length);
+                senha += caracteres.substring(randomNumber, randomNumber + 1);
             }
 
-            function copiarSenha(){
-                copiartexto = document.getElementById("senha");
-                copiartexto.select();
-                copiartexto.setSelectionRange(0,9999);
-                document.execCommand("copiar");
-                alertBox.classList.toggle('active');
-                setTimeout(function(){
-                    alertBox.classList.toggle('active')
-                }, 2000)
-            }
-        </script>
-    </body>
+            senhaInput.value = senha;
+        }
+
+        function copiarSenha() {
+            senhaInput.select();
+            senhaInput.setSelectionRange(0, 99999);
+            document.execCommand('copy');
+            alertMessage.innerHTML = 'Senha copiada!';
+            alertBox.classList.add('active');
+            setTimeout(() => alertBox.classList.remove('active'), 2000);
+        }
+
+        gerarBtn.addEventListener('click', getPassword);
+        copiarBtn.addEventListener('click', copiarSenha);
+    </script>
+</body>
+
 </html>
